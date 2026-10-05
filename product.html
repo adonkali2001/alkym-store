@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Form Legging — ALKYM</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="header">
+
+    <a href="index.html" class="logo">ALKYM</a>
+
+    <nav class="nav">
+        <a href="index.html#collection">NEW</a>
+        <a href="index.html#collection">SHOP</a>
+        <a href="index.html#story">OUR STORY</a>
+    </nav>
+
+    <div class="header-actions">
+        <a href="#">SEARCH</a>
+        <a href="#" id="bagCount">BAG (0)</a>
+    </div>
+
+</header>
+
+
+<main class="product-page">
+
+    <!-- PRODUCT IMAGE -->
+
+    <div class="product-gallery">
+        <div class="product-main-photo"></div>
+    </div>
+
+
+    <!-- PRODUCT INFORMATION -->
+
+    <div class="product-details">
+
+        <p class="product-category">
+            ALKYM / ESSENTIALS
+        </p>
+
+        <h1>Form Legging</h1>
+
+        <p class="product-price">
+            $120
+        </p>
+
+        <div class="product-description">
+            Sculpted support. Soft compression.
+            Designed to move effortlessly from studio
+            to everyday life.
+        </div>
+
+
+        <!-- COLOR -->
+
+        <div class="option-block">
+
+            <div class="option-title">
+                <span>COLOR</span>
+                <span>Sand</span>
+            </div>
+
+            <button
+                class="color-circle"
+                aria-label="Sand">
+            </button>
+
+        </div>
+
+
+        <!-- SIZE -->
+
+        <div class="option-block">
+
+            <div class="option-title">
+                <span>SIZE</span>
+                <a href="#">SIZE GUIDE</a>
+            </div>
+
+            <div class="sizes">
+                <button>XS</button>
+                <button>S</button>
+                <button>M</button>
+                <button>L</button>
+                <button>XL</button>
+            </div>
+
+        </div>
+
+
+        <!-- ADD TO BAG -->
+
+        <button
+            class="add-bag"
+            id="addBag">
+
+            ADD TO BAG — $120
+
+        </button>
+
+
+        <!-- INFORMATION -->
+
+        <div class="product-notes">
+
+            <div>
+                <span>DETAILS</span>
+                <span>+</span>
+            </div>
+
+            <div>
+                <span>FIT & CARE</span>
+                <span>+</span>
+            </div>
+
+            <div>
+                <span>SHIPPING & RETURNS</span>
+                <span>+</span>
+            </div>
+
+        </div>
+
+    </div>
+
+</main>
+
+
+<!-- DARK BACKGROUND WHEN CART OPENS -->
+
+<div
+    class="cart-overlay"
+    id="cartOverlay">
+</div>
+
+
+<!-- CART -->
+
+<aside
+    class="cart-drawer"
+    id="cartDrawer">
+
+
+    <div class="cart-header">
+
+        <h2>YOUR BAG</h2>
+
+        <button
+            id="closeCart"
+            aria-label="Close cart">
+
+            ×
+
+        </button>
+
+    </div>
+
+
+    <!-- EMPTY CART -->
+
+    <div
+        class="cart-empty"
+        id="cartEmpty">
+
+        Your bag is empty.
+
+    </div>
+
+
+    <!-- PRODUCT IN CART -->
+
+    <div
+        class="cart-item"
+        id="cartItem">
+
+        <div class="cart-photo"></div>
+
+        <div class="cart-info">
+
+            <h3>Form Legging</h3>
+
+            <p>
+                Sand /
+                <span id="cartSize">M</span>
+            </p>
+
+            <strong>$120</strong>
+
+        </div>
+
+    </div>
+
+
+    <!-- CART TOTAL -->
+
+    <div
+        class="cart-bottom"
+        id="cartBottom">
+
+        <div class="cart-total">
+
+            <span>SUBTOTAL</span>
+
+            <strong>$120</strong>
+
+        </div>
+
+        <button class="checkout-button">
+            CHECKOUT
+        </button>
+
+        <p>
+            Taxes and shipping calculated at checkout.
+        </p>
+
+    </div>
+
+</aside>
+
+
+<!-- JAVASCRIPT -->
+
+<script>
+
+const sizeButtons =
+    document.querySelectorAll(".sizes button");
+
+const addBag =
+    document.getElementById("addBag");
+
+const bagCount =
+    document.getElementById("bagCount");
+
+const cartDrawer =
+    document.getElementById("cartDrawer");
+
+const cartOverlay =
+    document.getElementById("cartOverlay");
+
+const closeCart =
+    document.getElementById("closeCart");
+
+const cartItem =
+    document.getElementById("cartItem");
+
+const cartBottom =
+    document.getElementById("cartBottom");
+
+const cartEmpty =
+    document.getElementById("cartEmpty");
+
+const cartSize =
+    document.getElementById("cartSize");
+
+
+let selectedSize = "";
+
+let items = 0;
+
+
+/* OPEN CART */
+
+function openCart() {
+
+    cartDrawer.classList.add("open");
+
+    cartOverlay.classList.add("open");
+
+}
+
+
+/* CLOSE CART */
+
+function hideCart() {
+
+    cartDrawer.classList.remove("open");
+
+    cartOverlay.classList.remove("open");
+
+}
+
+
+/* SELECT SIZE */
+
+sizeButtons.forEach(button => {
+
+    button.addEventListener("click", () => {
+
+        sizeButtons.forEach(btn =>
+            btn.classList.remove("selected")
+        );
+
+        button.classList.add("selected");
+
+        selectedSize =
+            button.textContent.trim();
+
+        addBag.textContent =
+            "ADD TO BAG — $120";
+
+    });
+
+});
+
+
+/* ADD PRODUCT */
+
+addBag.addEventListener("click", () => {
+
+    if (!selectedSize) {
+
+        addBag.textContent =
+            "SELECT A SIZE";
+
+        return;
+
+    }
+
+    items = 1;
+
+    bagCount.textContent =
+        "BAG (1)";
+
+    cartSize.textContent =
+        selectedSize;
+
+    cartEmpty.style.display =
+        "none";
+
+    cartItem.style.display =
+        "flex";
+
+    cartBottom.style.display =
+        "block";
+
+    openCart();
+
+});
+
+
+/* CLICK BAG */
+
+bagCount.addEventListener("click", event => {
+
+    event.preventDefault();
+
+    openCart();
+
+});
+
+
+/* CLOSE BUTTON */
+
+closeCart.addEventListener(
+    "click",
+    hideCart
+);
+
+
+/* CLICK DARK BACKGROUND */
+
+cartOverlay.addEventListener(
+    "click",
+    hideCart
+);
+
+</script>
+
+</body>
+</html>
